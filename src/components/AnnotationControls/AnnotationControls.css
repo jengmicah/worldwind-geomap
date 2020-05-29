@@ -1,0 +1,7 @@
+.modal-content {
+  text-align: center;
+}
+.modal-dialog {
+  max-width: 350px !important;
+  margin: auto !important;
+}

@@ -1,0 +1,21 @@
+nav.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+nav.navbar button,
+nav.navbar button:focus,
+nav.navbar button:hover,
+nav.navbar button:active {
+  box-shadow: none !important;
+}
+.toggle {
+  opacity: 0.6;
+  filter: brightness(80%);
+  transition: all 0.1s ease;
+  margin: 0 1px;
+}
+.toggle.active {
+  opacity: 1;
+  filter: brightness(115%);
+}
