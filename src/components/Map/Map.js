@@ -22,7 +22,7 @@ const Map = ({ annotate, setAnnotate, toggledLayer }) => {
 
     useEffect(() => {
         WorldWind.Logger.setLoggingLevel(WorldWind.Logger.LEVEL_NONE);
-        WorldWind.configuration.baseUrl = "https://worldwind.netlify.app";
+        WorldWind.configuration.baseUrl = "https://worldwind.netlify.app/";
         // Create a WorldWindow for the canvas.
         let globe = new WorldWind.WorldWindow("globe");
         setWwd(globe);
