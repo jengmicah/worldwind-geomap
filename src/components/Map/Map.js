@@ -229,34 +229,24 @@ const Map = ({ map, annotate, setAnnotate, toggledLayer }) => {
     const addPlacemark = (wwd, dataset, marker, displayName) => {
         let placemark,
             placemarkAttributes = new WorldWind.PlacemarkAttributes(null),
-            highlightAttributes,
             placemarkLayer = new WorldWind.RenderableLayer(displayName);
 
         // Set up the common placemark attributes.
-        placemarkAttributes.imageScale = 0.5;
         placemarkAttributes.imageOffset = new WorldWind.Offset(
             WorldWind.OFFSET_FRACTION, 0.3,
             WorldWind.OFFSET_FRACTION, 0.0
         );
-        placemarkAttributes.labelAttributes.offset = new WorldWind.Offset(
-            WorldWind.OFFSET_FRACTION, 0.5,
-            WorldWind.OFFSET_FRACTION, 1.0
-        );
+        placemarkAttributes.imageSource = marker;
+        // placemarkAttributes.labelAttributes.offset = new WorldWind.Offset(
+        //     WorldWind.OFFSET_FRACTION, 0.5,
+        //     WorldWind.OFFSET_FRACTION, 1.0
+        // );
 
         for (let data of dataset) {
             // Create the placemark and its label.
-            placemark = new WorldWind.Placemark(new WorldWind.Position(data.latitude, data.longitude, 1e2), true, null);
-            placemark.label = `(${placemark.position.latitude.toPrecision(4)}, ${placemark.position.longitude.toPrecision(5)})`;
-            placemark.altitudeMode = WorldWind.RELATIVE_TO_GROUND;
-
-            placemarkAttributes = new WorldWind.PlacemarkAttributes(placemarkAttributes);
-            placemarkAttributes.imageSource = marker;
+            placemark = new WorldWind.Placemark(new WorldWind.Position(data.latitude, data.longitude, 0), true, null);
+            // placemark.label = `(${placemark.position.latitude.toPrecision(4)}, ${placemark.position.longitude.toPrecision(5)})`;
             placemark.attributes = placemarkAttributes;
-
-            highlightAttributes = new WorldWind.PlacemarkAttributes(placemarkAttributes);
-            highlightAttributes.imageScale = 1;
-            placemark.highlightAttributes = highlightAttributes;
-
             // Add the placemark to the layer.
             placemarkLayer.addRenderable(placemark);
         }
