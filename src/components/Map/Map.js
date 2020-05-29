@@ -10,7 +10,7 @@ import markerBlue from './markers/marker-blue.png';
 
 import './Map.css';
 
-const Map = ({ annotate, setAnnotate, toggledLayer }) => {
+const Map = ({ map, annotate, setAnnotate, toggledLayer }) => {
     const [wwd, setWwd] = useState(null);
     const [modal, setModal] = useState(false);
     const [currModal, setCurrModal] = useState(0);
@@ -19,22 +19,34 @@ const Map = ({ annotate, setAnnotate, toggledLayer }) => {
         lat: 0,
         lng: 0
     });
+    const [flatGlobe, setFlatGlobe] = useState(null);
+    const [roundGlobe, setRoundGlobe] = useState(null);
 
     useEffect(() => {
         WorldWind.Logger.setLoggingLevel(WorldWind.Logger.LEVEL_NONE);
         WorldWind.configuration.baseUrl = "https://worldwind.netlify.app/";
         // Create a WorldWindow for the canvas.
-        let globe = new WorldWind.WorldWindow("globe");
-        setWwd(globe);
+        let wwdCanvas = new WorldWind.WorldWindow("globe");
+        let roundGlobe = new WorldWind.Globe(new WorldWind.EarthElevationModel());
+        let flatGlobe = new WorldWind.Globe2D();
+        flatGlobe.projection = new WorldWind.ProjectionMercator();
+        setFlatGlobe(flatGlobe);
+        setRoundGlobe(roundGlobe);
+        setWwd(wwdCanvas);
         // Add layers 
-        addWorldWindLayers(globe);
+        addWorldWindLayers(wwdCanvas);
         // Add a placemark
-        addPlacemark(globe, walmartData, markerBlue, "Walmart");
-        addPlacemark(globe, targetData, markerRed, "Target");
+        addPlacemark(wwdCanvas, walmartData, markerBlue, "Walmart");
+        addPlacemark(wwdCanvas, targetData, markerRed, "Target");
         // Add listener for annotation editing
-        handleAnnotationPicking(globe);
+        handleAnnotationPicking(wwdCanvas);
     }, []);
-
+    useEffect(() => {
+        if (wwd != null) {
+            if(map) wwd.globe = flatGlobe;
+            else wwd.globe = roundGlobe;
+        }
+    }, [map, flatGlobe, roundGlobe, wwd]);
     useEffect(() => {
         // Toggle layer based on user input in <Controls />
         if (wwd != null)

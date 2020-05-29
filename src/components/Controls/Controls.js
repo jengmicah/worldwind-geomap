@@ -3,7 +3,7 @@ import { Navbar, Nav, Button, ButtonGroup } from 'reactstrap';
 
 import './Controls.css';
 
-const Controls = ({ setAnnotate, setToggledLayer }) => {
+const Controls = ({ setAnnotate, setToggledLayer, map, setMap }) => {
     const [activeLayers, setActiveLayers] = useState({});
 
     /**
@@ -19,6 +19,11 @@ const Controls = ({ setAnnotate, setToggledLayer }) => {
     return (
         <Navbar color="transparent" expand="md">
             <Nav className="mr-auto" navbar>
+                <Button
+                    color="secondary"
+                    onClick={() => { setMap(!map) }}>
+                    Toggle 3D
+                </Button>
                 <ButtonGroup>
                     <Button
                         className="toggle"
