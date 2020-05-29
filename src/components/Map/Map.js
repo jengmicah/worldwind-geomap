@@ -191,6 +191,7 @@ const Map = ({ annotate, setAnnotate, toggledLayer }) => {
         // Create and add layers to the WorldWindow.
         let layers = [
             // Imagery layer
+            { layer: new WorldWind.BMNGOneImageLayer(), enabled: true },
             { layer: new WorldWind.BingRoadsLayer(null), enabled: true },
             // Add atmosphere layer on top of all base layers
             { layer: new WorldWind.StarFieldLayer(), enabled: true },
